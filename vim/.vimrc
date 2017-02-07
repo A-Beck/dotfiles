@@ -33,4 +33,13 @@ set tabstop=4
 
 set ai "Auto indent
 set si "Smart indent
-set wrap "Wrap lines
+set wrap "Wrap lines"
+
+""""""""""""""""""""""""""""""""""
+" OpenShift
+"""""""""""""""""
+
+filetype indent on
+syntax on
+set modeline
+autocmd FileType yaml setlocal ai ts=2 sw=2 et

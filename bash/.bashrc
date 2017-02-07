@@ -5,6 +5,9 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# Get newline to type on
+PS1="[\u@\h \W]\n\\$ "
+
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
@@ -52,6 +55,6 @@ shopt -s histappend histreedit histverify
 shopt -s extglob   
 
 # openshift command line tooling
-alias oc="/usr/local/share/openshift-client/oc"
+#alias oc="/usr/local/share/openshift-client/oc"
 # make docker usable
 alias docker="sudo /usr/bin/docker"

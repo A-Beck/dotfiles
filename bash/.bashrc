@@ -5,8 +5,21 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# Get newline to type on
-PS1="[\u@\h \W]\n\\$ "
+# git completion
+source /usr/share/git-core/contrib/completion/git-prompt.sh
+GIT_COMPLETION_PATH="/etc/bash_completion.d/git.sh"
+if [ -f "$GIT_COMPLETION_PATH" ]; then
+   GIT_PS1_SHOWDIRTYSTATE=true
+   . "$GIT_COMPLETION_PATH"
+   ADD_PS1='$(__git_ps1)'
+fi
+
+# better prompt
+if [[ ${EUID} == 0 ]] ; then
+    PS1="\[\033[01;31m\]\h\[\033[01;34m\] \w\[\033[33m\]$ADD_PS1\[\033[34m\] \n\\$\[\033[00m\] "
+else
+    PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[33m\]$ADD_PS1\[\033[34m\] \n\\$\[\033[00m\] "
+fi
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
@@ -54,7 +67,5 @@ shopt -s cmdhist
 shopt -s histappend histreedit histverify
 shopt -s extglob   
 
-# openshift command line tooling
-#alias oc="/usr/local/share/openshift-client/oc"
 # make docker usable
 alias docker="sudo /usr/bin/docker"

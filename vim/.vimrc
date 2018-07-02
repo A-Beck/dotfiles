@@ -43,3 +43,9 @@ filetype indent on
 syntax on
 set modeline
 autocmd FileType yaml setlocal ai ts=2 sw=2 et
+
+"""""""""""""""""""""""""""""""""""
+" CrossHairs
+""""""""""""""""""""""
+
+"set cursorcolumn cursorline

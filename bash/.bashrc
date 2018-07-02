@@ -5,35 +5,34 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# git completion
-source /usr/share/git-core/contrib/completion/git-prompt.sh
-GIT_COMPLETION_PATH="/etc/bash_completion.d/git.sh"
-if [ -f "$GIT_COMPLETION_PATH" ]; then
-   GIT_PS1_SHOWDIRTYSTATE=true
-   . "$GIT_COMPLETION_PATH"
-   ADD_PS1='$(__git_ps1)'
-fi
+source ~/.git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=true
+ADD_PS1='$(__git_ps1)'
 
 # better prompt
 if [[ ${EUID} == 0 ]] ; then
     PS1="\[\033[01;31m\]\h\[\033[01;34m\] \w\[\033[33m\]$ADD_PS1\[\033[34m\] \n\\$\[\033[00m\] "
 else
-    PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[33m\]$ADD_PS1\[\033[34m\] \n\\$\[\033[00m\] "
+    PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[33m\]$ADD_PS1\[\033[34m\] \n\t \\$\[\033[00m\] "
 fi
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
-# set up path to the JDK
-export JAVA_HOME='/usr/lib/jvm/java-1.8.0'
-export PATH=$PATH:$JAVA_HOME
+# use vim over vi
+export EDITOR=vim
+export PAGER=less
 
-#Set Up Maven Installation
-export MVN='/opt/apache-maven-3.3.3/bin'
-export PATH=$PATH:$MVN
+# less options - https://opensource.com/article/18/5/advanced-use-less-text-file-viewer
+LESS='-C -M -I -j 10 -# 4'
+
+# perevent freezing
+# So as not to be disturbed by Ctrl-S ctrl-Q in terminals:
+stty -ixon
 
 #Allow for Ansible Custom Modules
 #export ANSIBLE_LIBRARY="$HOME/.ansible-modules-extra:/usr/lib/python2.7/site-packages/ansible"
+export ANSIBLE_RETRY_FILES_ENABLED='FALSE'
 
 # User specific aliases and functions
 ##  Power control
@@ -48,6 +47,8 @@ alias la='ls -ah'
 alias lx='ls -lXB'
 alias lk='ls -lSr'
 alias lt='ls -ltr'
+## tree
+alias tree='tree -C'
 ## typos
 alias xs='cd'
 alias vf='cd'
@@ -55,7 +56,9 @@ alias moer='more'
 alias moew='more'
 alias kk='ll'
 ## debugging
-alias debug="set -o nounset; set -o xtrace"
+alias debug="set -o nounset; set -i#o xtrace"
+## Editing
+alias vscode="/usr/bin/code"
 # Enable options:
 shopt -s cdspell
 shopt -s cdable_vars
@@ -67,5 +70,34 @@ shopt -s cmdhist
 shopt -s histappend histreedit histverify
 shopt -s extglob   
 
-# make docker usable
-alias docker="sudo /usr/bin/docker"
+# random
+function mkcd() {
+    mkdir $1
+    cd $1
+}
+
+export log_dir=~/.notes/daily_logs
+
+function log_note() {
+    local today=$( date +"%F" )
+    local time=$( date +"%r" )
+    local log_file="${log_dir}/${today}.txt"
+    if [[ ! -f "${log_file}" ]] ; then
+        echo "$today" > "${log_file}"
+        echo "===============" >> "${log_file}"
+        echo "" >> "${log_file}"
+    fi
+    echo "$time: $@" >>  "${log_file}"
+}
+
+function edit_log() {
+    local today=$( date +"%F" )
+    local time=$( date +"%r" )
+    local log_file="${log_dir}/${today}.txt"
+    vim  $log_file
+}
+
+function view_log() {
+    local today=$( date +"%F" )
+    cat $log_dir/* | less
+}

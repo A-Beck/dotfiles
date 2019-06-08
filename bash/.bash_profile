@@ -11,5 +11,9 @@ PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
 export PATH
 
+GOPATH=$HOME/Code/go
+
+export GOPATH
+
 ### TMUX work-around
 source ~/.bashrc

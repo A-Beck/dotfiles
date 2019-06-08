@@ -2,7 +2,7 @@
 
 # edit this if you have your dotfiles directory someplace else
 
-your_dotfile_dir=~/dotfiles
+your_dotfile_dir=~/.dotfiles
 
 #### Do not edit below this point
 

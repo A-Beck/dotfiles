@@ -69,3 +69,6 @@ shopt -s extglob
 
 # make docker usable
 alias docker="sudo /usr/bin/docker"
+
+# make
+alias m=make

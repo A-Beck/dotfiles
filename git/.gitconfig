@@ -1,10 +1,9 @@
 # This is Git's per-user configuration file.
 [user]
-name = Andrew Becker
-	email = anbecker@redhat.com
-#email = anbecker@redhat.com
+    name = Andrew Becker
+    email = andrew.d.becker@outlook.com
 [merge]
-  tool = meld
+    tool = meld
 [http]
 	sslVerify = false
 [help]

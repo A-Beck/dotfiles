@@ -4,7 +4,5 @@
     email = andrew.d.becker@outlook.com
 [merge]
     tool = meld
-[http]
-	sslVerify = false
 [help]
 	autocorrect = 1

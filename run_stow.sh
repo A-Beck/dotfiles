@@ -10,7 +10,6 @@ DOTFILES_DIR="$( readlink --canonicalize ${your_dotfile_dir} )"
 
 if [[ "X$( which stow )" == "X" ]]; then
     echo "ERROR: GNU Stow is not installed"
-    echo "Please run 'sudo yum install stow' to install"
     exit 1
 fi
 
